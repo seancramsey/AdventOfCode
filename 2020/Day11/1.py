@@ -1,3 +1,4 @@
+from copy import deepcopy
 ### KEY ###
 #   L = empty seat
 #   # = occupied seat
@@ -6,27 +7,33 @@
 floorMapCur = open('input.txt').read().split()
 # Add buffers to map, this will protect against out of index errors
 #'''ADD BUFFER TO THE END OF EACH ROW
-floorMapCur = [list('.'+floorMapCur[i]+'.') for i in range(0, len(floorMapCur))]
+#floorMapCur = [list('.'+floorMapCur[i]+'.') for i in range(0, len(floorMapCur))]
 #'''ADD BUFFER ROWS
-border = ['.'] * len(floorMapCur[0])
-floorMapCur.insert(0,border)
-floorMapCur.append(border)
+#border = ['.'] * len(floorMapCur[0])
+#floorMapCur.insert(0,border)
+#floorMapCur.append(border)
 #Store new map dimensions
 dim = len(floorMapCur)
 directions = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1], [1,0], [1,1]]
 def checkNeighbors(i,j):
-    return [floorMapCur[i+x][j+y] for x,y in directions].count('#')
+    sum = 0
+    for x,y in directions:
+        ix = i+x
+        jy = j+y
+        if ix >=0 and jy >= 0 and ix < dim and jy < dim:
+            if floorMapCur[i+x][j+y] == '#':
+                sum += 1
+    return sum
 
 changes = 100
 iter = 0
 
-#floorMapNxt = [['.' for i in range(dim)] for j in range(dim)]
+floorMapNxt = [['.' for i in range(dim)] for j in range(dim)]
 while changes != 0:
     iter+=1
     changes = 0
-    floorMapNxt = [['.' for i in range(dim)] for j in range(dim)]
-    for i in range(1,dim-1):
-        for j in range(1,dim-1):
+    for i in range(dim):
+        for j in range(dim):
             cur = floorMapCur[i][j]
             n = checkNeighbors(i,j)
             if cur == 'L' and n == 0:
@@ -39,6 +46,6 @@ while changes != 0:
                 changes += 1
             else: #if cur == '.'
                 floorMapNxt[i][j] = cur
-    floorMapCur = floorMapNxt.copy()
+    floorMapCur = deepcopy(floorMapNxt)
 
 print(sum([line.count('#') for line in floorMapCur]))
