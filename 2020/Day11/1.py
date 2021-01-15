@@ -5,14 +5,6 @@ from copy import deepcopy
 #   . = empty space
 #floorMapCur = open('test.txt').read().split()
 floorMapCur = open('input.txt').read().split()
-# Add buffers to map, this will protect against out of index errors
-#'''ADD BUFFER TO THE END OF EACH ROW
-#floorMapCur = [list('.'+floorMapCur[i]+'.') for i in range(0, len(floorMapCur))]
-#'''ADD BUFFER ROWS
-#border = ['.'] * len(floorMapCur[0])
-#floorMapCur.insert(0,border)
-#floorMapCur.append(border)
-#Store new map dimensions
 dim = len(floorMapCur)
 directions = [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1], [1,0], [1,1]]
 def checkNeighbors(i,j):

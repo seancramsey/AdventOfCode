@@ -27,7 +27,6 @@ iter = 0
 while changes != 0:
     iter+=1
     changes = 0
-    floorMapNxt = [['.' for i in range(dim)] for j in range(dim)]
     for i in range(1,dim-1):
         for j in range(1,dim-1):
             cur = floorMapCur[i][j]
