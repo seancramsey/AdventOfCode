@@ -79,6 +79,8 @@ int part2() {
 	std::string o2 = *set_oxyGenerator.begin();
 	std::string co2 = *set_co2Scrubber.begin();
 
+	std::cout << o2 << ' ' << co2 << '\n';
+
 	return static_cast<int>(std::bitset<12>(o2).to_ulong() * std::bitset<12>(co2).to_ulong());
 }
 //PART 2 END
