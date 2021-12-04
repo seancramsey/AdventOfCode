@@ -35,12 +35,12 @@ int part1() {
 #include <unordered_set>
 #include <thread>
 #include <iterator>
-void eliminationProcedure(std::unordered_set<std::string>* process_set, char rule) {
+void eliminationProcedure(std::unordered_set<std::string>& process_set, char rule) {
 	//while we can eliminate binary strings
-	for (int i = 0; i < 12 && process_set->size() > 1; i++) {
+	for (int i = 0; i < 12 && process_set.size() > 1; i++) {
 		//first pass: get count of 1s vs 0s;
 		int counter = 0;
-		for (const std::string& str : *process_set) {
+		for (const std::string& str : process_set) {
 			counter += str[i] == '1' ? 1 : -1;
 		}
 		//second pass: eliminate values that don't meet criteria
@@ -51,13 +51,13 @@ void eliminationProcedure(std::unordered_set<std::string>* process_set, char rul
 			target = counter > 0 ? '0' : (counter < 0 ? '1' : '0');
 		}
 		std::unordered_set<std::string> eliminationSet;
-		for (const std::string& str : *process_set) {
+		for (const std::string& str : process_set) {
 			if (str[i] != target) {
 				eliminationSet.insert(str);
 			}
 		}
 		for (const std::string& str : eliminationSet) {
-			process_set->erase(str);
+			process_set.erase(str);
 		}
 	}
 }
@@ -70,19 +70,14 @@ int part2() {
 
 	std::unordered_set<std::string> set_co2Scrubber(set_oxyGenerator.begin(), set_oxyGenerator.end());
 
-	//eliminationProcedure(&set_oxyGenerator, '1');
-	//eliminationProcedure(&set_co2Scrubber, '0');
-
-	std::thread th1(eliminationProcedure, &set_oxyGenerator, '1');
-	std::thread th2(eliminationProcedure, &set_co2Scrubber, '0');
+	std::thread th1(eliminationProcedure, std::ref(set_oxyGenerator), '1');
+	std::thread th2(eliminationProcedure, std::ref(set_co2Scrubber), '0');
 
 	th1.join();
 	th2.join();
 
 	std::string o2 = *set_oxyGenerator.begin();
 	std::string co2 = *set_co2Scrubber.begin();
-
-	//std::cout << std::bitset<12>(o2).to_ulong() << ' ' << std::bitset<12>(co2).to_ulong() << '\n';
 
 	return static_cast<int>(std::bitset<12>(o2).to_ulong() * std::bitset<12>(co2).to_ulong());
 }
