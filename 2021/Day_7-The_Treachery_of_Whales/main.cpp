@@ -23,6 +23,16 @@ int part1(std::vector<int>& input) {
 	return min_fuel;
 }
 
+int part1_alt(std::vector<int>& input) {
+	std::sort(input.begin(), input.end());
+	int median = input[input.size() / 2];
+	int fuel = 0;
+	for (auto x : input) {
+		fuel += std::abs(x - median);
+	}
+	return fuel;
+}
+
 int part2(std::vector<int>& input) {
 	int avg = 0;
 	for (auto x : input) {
@@ -43,6 +53,19 @@ int part2(std::vector<int>& input) {
 	return min_fuel;
 }
 
+int part2_alt(std::vector<int>& input) {
+	int mean = 0;
+	for (auto x : input){
+		mean += x;
+	}
+	mean /= input.size();
+	int fuel = 0;
+	for (auto x : input) {
+		int dist = std::abs(x - mean);
+		fuel += dist * (dist + 1) / 2;
+	}
+	return fuel;
+}
 
 
 int main() {
@@ -55,7 +78,7 @@ int main() {
 		}
 	}
 
-	std::cout << "Part 1: " << part1(input) << std::endl;
-	std::cout << "Part 2: " << part2(input) << std::endl;
+	std::cout << "Part 1: " << part1_alt(input) << std::endl;
+	std::cout << "Part 2: " << part2_alt(input) << std::endl;
 	return 0;
 }
