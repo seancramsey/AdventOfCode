@@ -50,16 +50,17 @@ public:
 		return min_cost_entering_coord[min_cost_entering_coord.size() - 1][min_cost_entering_coord[0].size() - 1];
 	}
 
-	void expand_map_part2() {
+	void expand_map_part2(size_t scale) {
+
 		size_t  m = m_risk_map.size(),
 			n = m_risk_map[0].size();
-		m_risk_map.resize(m*5);
+		m_risk_map.resize(m*scale);
 		for (auto& row : m_risk_map)
-			row.resize(n*5);
+			row.resize(n*scale);
 		for (size_t i = 0; i < m; i++) {
 			for (size_t j = 0; j < n; j++) {
-				for (size_t y = 0; y < 5; y++) {
-					for (size_t x = 0; x < 5; x++) {
+				for (size_t y = 0; y < scale; y++) {
+					for (size_t x = 0; x < scale; x++) {
 						if (y == 0 && x == 0) continue;
 						size_t	n_y = y * m + i,
 								n_x = x * n + j;
@@ -95,7 +96,7 @@ private:
 int main() {
 	Solution solution("input.txt");
 	std::cout << "Part 1: " << solution.run() << std::endl;
-	solution.expand_map_part2();
+	solution.expand_map_part2(5);
 	std::cout << "Part 2: " << solution.run() << std::endl;
 	return 0;
 }
