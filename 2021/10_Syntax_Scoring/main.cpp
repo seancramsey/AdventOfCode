@@ -86,7 +86,7 @@ uint64_t score_autocomplete(std::string& chunk) {
 	}
 
 	//once we have checked for corrupt strings the state of the stack tells us whether or not it is incomplete
-	static const std::unordered_map<char, uint32_t> sc = {
+	static const std::unordered_map<char, uint64_t> sc = {
 		{'(', 1},
 		{'[', 2},
 		{'{', 3},
@@ -107,14 +107,14 @@ uint64_t part2(std::vector<std::string>& data) {
 			scores.push_back(score);
 	}
 	std::sort(scores.begin(), scores.end());
-	
+	/*
 	std::cout << '\n';
 	int i = 0;
 	for (auto sc : scores) {
 		std::cout << i++ << ' ' << sc << '\n';
 	}
 	std::cout << '\n';
-	
+	*/
 	return scores[scores.size() / 2];
 }
 
@@ -123,8 +123,6 @@ int main() {
 	std::vector<std::string> data = parseInput();
 
 	std::cout << "Part 1: " << part1(data) << std::endl;
-
-	//part 2 fails and I have no idea why
 	std::cout << "Part 2: " << part2(data) << std::endl;
 	return 0;
 }
