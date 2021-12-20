@@ -29,8 +29,6 @@ public:
 		while (pq.size()) {
 			auto cur = pq.top(); pq.pop();
 
-			if (cur.pathCost > min_cost_entering_coord[cur.x][cur.y])
-				continue;
 			for (auto& d : directions) {
 				//if new X or new Y lies outside of grid, it is not a valid point
 				int newX = cur.x + d.x;
